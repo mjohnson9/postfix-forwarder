@@ -1,0 +1,5 @@
+{{range $domain := lsdir "/services/mail/aliases"}}
+	{{range $alias := gets (printf "/services/mail/aliases/%s/*" $domain)}}
+{{base $alias.Key}}@{{$domain}}    {{$alias.Value}}
+	{{end}}
+{{end}}

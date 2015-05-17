@@ -10,6 +10,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -qq -
 COPY confd/confd /opt/confd
 RUN chmod a+x /opt/confd
 
+COPY confd/cert.pem.toml /etc/confd/conf.d/
+COPY confd/cert.pem.tmpl /etc/confd/templates/
+
 COPY confd/virtual_aliases.toml /etc/confd/conf.d/
 COPY confd/virtual_aliases.tmpl /etc/confd/templates/
 

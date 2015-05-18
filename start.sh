@@ -7,7 +7,8 @@ fi
 
 echo $MAILNAME > /etc/mailname
 
-postconf -e 'myorigin=$mydomain' \
+postconf -e "myhostname=$MAILNAME" \
+            'myorigin=$mydomain' \
             'mynetworks_style=subnet' \
             'mydestination=' \
             'mailbox_transport=error:this server does not accept mail for local delivery' \

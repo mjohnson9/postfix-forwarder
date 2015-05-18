@@ -33,7 +33,7 @@ until /opt/confd -onetime -node $ETCD; do
 done
 
 
-/opt/confd -watch -node $ETCD -config-file $tomlFile &
+/opt/confd -watch -node $ETCD &
 echo "confd is now monitoring for changes in primary configuration files..."
 
 echo "waiting for confd to create initial SSL certificate"

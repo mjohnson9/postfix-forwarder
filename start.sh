@@ -13,8 +13,11 @@ postconf -e 'myorigin=$mydomain' \
             'mailbox_transport=error:this server does not accept mail for local delivery' \
             'smtpd_tls_cert_file=/etc/postfix/cert.pem' \
             'smtpd_tls_key_file=$smtpd_tls_cert_file' \
+            'alias_maps=hash:/etc/postfix/aliases' \
+            'alias_database=$alias_maps' \
             'virtual_alias_domains=hash:/etc/postfix/virtual_domains' \
             'virtual_alias_maps=hash:/etc/postfix/virtual_aliases'
+
 
 # Utilize the init script to configure the chroot (if needed)
 /etc/init.d/postfix start > /dev/null

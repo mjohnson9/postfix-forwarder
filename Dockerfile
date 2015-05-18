@@ -13,6 +13,9 @@ RUN chmod a+x /opt/confd
 COPY confd/cert.pem.toml /opt/confd-ssl/conf.d/
 COPY confd/cert.pem.tmpl /opt/confd-ssl/templates/
 
+COPY confd/aliases.toml /etc/confd/conf.d/
+COPY confd/aliases.tmpl /etc/confd/templates/
+
 COPY confd/virtual_aliases.toml /etc/confd/conf.d/
 COPY confd/virtual_aliases.tmpl /etc/confd/templates/
 

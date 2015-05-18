@@ -1,0 +1,3 @@
+{{range $alias := gets "/services/mail/internal-aliases/*"}}
+{{base $alias.Key}}:    {{$alias.Value}}
+{{end}}

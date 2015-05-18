@@ -27,23 +27,21 @@ export ETCD_PORT=${ETCD_PORT:-4001}
 export HOST_IP=${HOST_IP:-172.17.42.1}
 export ETCD=$HOST_IP:$ETCD_PORT
 
-for tomlFile in /etc/confd/conf.d/virtual_aliases.toml /etc/confd/conf.d/virtual_domains.toml; do
-    until /opt/confd -onetime -node $ETCD -config-file $tomlFile; do
-        echo "waiting for confd to create initial config for $tomlFile"
-        sleep 1s
-    done
-
-
-    /opt/confd -watch -node $ETCD -config-file $tomlFile &
-    echo "confd is now monitoring $tomlFile for changes..."
-done;
-
-until /opt/confd -onetime -node $ETCD -prefix "/services/ssl/$MAILNAME" -config-file /etc/confd/conf.d/cert.pem.toml; do
-    echo "waiting for confd to create initial SSL certificate"
+echo "waiting for confd to create primary configuration files"
+until /opt/confd -onetime -node $ETCD; do
     sleep 1s
 done
 
-/opt/confd -watch -node $ETCD -prefix "/services/ssl/$MAILNAME" -config-file /etc/confd/conf.d/cert.pem.toml &
+
+/opt/confd -watch -node $ETCD -config-file $tomlFile &
+echo "confd is now monitoring for changes in primary configuration files..."
+
+echo "waiting for confd to create initial SSL certificate"
+until /opt/confd -onetime -node $ETCD -prefix "/services/ssl/$MAILNAME" -confdir /opt/confd-ssl; do
+    sleep 1s
+done
+
+/opt/confd -watch -node $ETCD -prefix "/services/ssl/$MAILNAME" -confdir /opt/confd-ssl &
 echo "confd is now monitoring SSL certificate for changes..."
 
 postmap /etc/postfix/virtual_aliases

@@ -12,6 +12,7 @@ postconf -e 'myorigin=$mydomain' \
             'mydestination=' \
             'mailbox_transport=error:this server does not accept mail for local delivery' \
             'smtpd_tls_cert_file=/etc/postfix/cert.pem' \
+            'smtpd_tls_key_file=$smtpd_tls_cert_file' \
             'virtual_alias_domains=hash:/etc/postfix/virtual_domains' \
             'virtual_alias_maps=hash:/etc/postfix/virtual_aliases'
 

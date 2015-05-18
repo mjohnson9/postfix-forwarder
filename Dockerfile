@@ -22,6 +22,8 @@ COPY confd/virtual_aliases.tmpl /etc/confd/templates/
 COPY confd/virtual_domains.toml /etc/confd/conf.d/
 COPY confd/virtual_domains.tmpl /etc/confd/templates/
 
+COPY dh2048.pem /etc/ssl/dh2048.pem
+
 COPY start.sh /opt/start.sh
 RUN chmod a+x /opt/start.sh
 

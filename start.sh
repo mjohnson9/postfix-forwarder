@@ -18,13 +18,9 @@ postconf -e 'myorigin=$mydomain' \
             'virtual_alias_domains=hash:/etc/postfix/virtual_domains' \
             'virtual_alias_maps=hash:/etc/postfix/virtual_aliases' \
             'smtpd_delay_reject=yes' \
-            'smtpd_client_restrictions =' \
-            'smtpd_data_restrictions =' \
-            'smtpd_end_of_data_restrictions =' \
-            'smtpd_etrn_restrictions =' \
             'smtpd_helo_restrictions = permit_mynetworks, reject_non_fqdn_helo_hostname, reject_invalid_helo_hostname, permit' \
             'smtpd_recipient_restrictions = reject_unauth_pipelining, reject_non_fqdn_recipient, reject_unknown_recipient_domain, permit_mynetworks, reject_unauth_destination, permit' \
-            'smtpd_relay_restrictions = permit_mynetworks, permit_sasl_authenticated, defer_unauth_destination' \
+            'smtpd_relay_restrictions = permit_mynetworks, defer_unauth_destination' \
             'smtpd_sender_restrictions = permit_mynetworks, reject_non_fqdn_sender, reject_unknown_sender_domain, permit'
 
 

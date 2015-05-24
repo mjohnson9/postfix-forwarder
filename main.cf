@@ -31,6 +31,11 @@ smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
 smtp_tls_mandatory_ciphers = high
 smtp_tls_mandatory_protocols = !SSLv2, !SSLv3
 
+## Log TLS basics
+smtpd_tls_received_header = yes
+smtpd_tls_loglevel = 1
+smtp_tls_loglevel = 1
+
 ## Always use our cipher list when possible
 tls_preempt_cipherlist = yes
 

@@ -1,0 +1,4 @@
+{{range $relaycert := gets "/services/mail/relays/*"}}
+# {{base $relaycert.Key}}
+{{$relaycert.Value}} OK
+{{end}}

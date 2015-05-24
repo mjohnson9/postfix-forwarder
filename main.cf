@@ -68,6 +68,15 @@ smtpd_relay_restrictions = permit_mynetworks, defer_unauth_destination
 smtpd_sender_restrictions = permit_mynetworks, reject_non_fqdn_sender, reject_unknown_sender_domain, permit
 smtpd_recipient_restrictions = reject_unauth_pipelining, reject_non_fqdn_recipient, reject_unknown_recipient_domain, permit_mynetworks, reject_unauth_destination, permit
 
+# Restrictions on authenticated senders
+mua_client_restrictions = permit_tls_clientcerts,reject
+mua_helo_restrictions =
+mua_sender_restrictions =
+
+# Authenticate senders by client certificate
+smtpd_tls_fingerprint_digest = sha512
+relay_clientcerts = hash:/etc/postfix/relay_clientcerts
+
 # Internal alias database
 alias_maps = hash:/etc/postfix/aliases
 alias_database = $alias_maps

@@ -16,6 +16,9 @@ COPY confd/cert.pem.tmpl /opt/confd-ssl/templates/
 COPY confd/aliases.toml /etc/confd/conf.d/
 COPY confd/aliases.tmpl /etc/confd/templates/
 
+COPY confd/relay_clientcerts.toml /etc/confd/conf.d/
+COPY confd/relay_clientcerts.tmpl /etc/confd/templates/
+
 COPY confd/virtual_aliases.toml /etc/confd/conf.d/
 COPY confd/virtual_aliases.tmpl /etc/confd/templates/
 
@@ -24,10 +27,11 @@ COPY confd/virtual_domains.tmpl /etc/confd/templates/
 
 COPY dh2048.pem /etc/ssl/dh2048.pem
 
+COPY master.cf /etc/postfix/master.cf
 COPY main.cf /etc/postfix/main.cf
 
 COPY start.sh /opt/start.sh
 RUN chmod a+x /opt/start.sh
 
-EXPOSE 25
+EXPOSE 25 465
 CMD ["/opt/start.sh"]

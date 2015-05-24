@@ -85,3 +85,10 @@ recipient_delimiter = +
 
 # Delay rejection until the RCPT TO command so that we can see who was attempting to send what
 smtpd_delay_reject = yes
+
+# Use no milter by default, but be modular enough that the startup script can set one
+smtpd_milters =
+non_smtpd_milters = $smtpd_milters
+
+## Apply milter to bounce and notification emails
+internal_mail_filter_classes = bounce, notify

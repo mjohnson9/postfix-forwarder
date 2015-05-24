@@ -8,6 +8,9 @@ To set etcd's location, specify the `ETCD_HOST` and `ETCD_PORT` environment vari
 
 The server's mailname must be specified with the `MAILNAME` environment variable. This should be a fully qualified domain name.
 
+A container may be linked with the alias 'milter' and the Postfix server will send all mail to it in milter format. This allows for, for example, an OpenDKIM server.
+Alternatively, the MILTER_PORT environment variable may be set and will be given to the Postfix server. If the variable begins with tcp://, that prefix will be automatically removed.
+
 ### etcd keys
 postfix-forwarder uses the following etcd keys:
 ```

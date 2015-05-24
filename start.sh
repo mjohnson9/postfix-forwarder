@@ -9,6 +9,11 @@ echo $MAILNAME > /etc/mailname
 
 postconf -e "myhostname=$MAILNAME"
 
+if [ -n "$MILTER_PORT" ]; then
+    MILTER="$(echo ${MILTER_PORT} | sed 's/^tcp:\/\///i')"
+    postconf -e "smtpd_milters=inet:${MILTER}"
+fi
+
 
 # Utilize the init script to configure the chroot (if needed)
 /etc/init.d/postfix start > /dev/null

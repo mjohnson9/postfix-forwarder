@@ -32,11 +32,11 @@ smtps     inet  n       -       -       -       -       smtpd
 #  -o smtpd_reject_unlisted_recipient=no
   -o smtpd_delay_reject=no
   -o smtpd_tls_ask_ccert=yes
-  -o smtpd_client_restrictions=permit_mynetworks, permit_tls_clientcerts, reject
-  -o smtpd_helo_restrictions=permit_mynetworks, permit_tls_clientcerts, reject
-  -o smtpd_sender_restrictions=permit_mynetworks, permit_tls_clientcerts, reject
-  -o smtpd_recipient_restrictions=permit_mynetworks, permit_tls_clientcerts, reject
-  -o smtpd_relay_restrictions=permit_mynetworks, permit_tls_clientcerts, reject
+  -o smtpd_client_restrictions=permit_mynetworks,permit_tls_clientcerts,reject
+  -o smtpd_helo_restrictions=permit_mynetworks,permit_tls_clientcerts,reject
+  -o smtpd_sender_restrictions=permit_mynetworks,permit_tls_clientcerts,reject
+  -o smtpd_recipient_restrictions=permit_mynetworks,permit_tls_clientcerts,reject
+  -o smtpd_relay_restrictions=permit_mynetworks,permit_tls_clientcerts,reject
   -o milter_macro_daemon_name=ORIGINATING
 #628       inet  n       -       -       -       -       qmqpd
 pickup    unix  n       -       -       60      1       pickup

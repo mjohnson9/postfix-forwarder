@@ -24,6 +24,8 @@ COPY confd/virtual_domains.tmpl /etc/confd/templates/
 
 COPY dh2048.pem /etc/ssl/dh2048.pem
 
+COPY main.cf /etc/postfix/main.cf
+
 COPY start.sh /opt/start.sh
 RUN chmod a+x /opt/start.sh
 

@@ -1,0 +1,87 @@
+# Listen on all interfaces and protocols
+inet_interfaces = all
+inet_protocols = all
+
+# We don't deliver mail locally. Don't start the biff service.
+biff = no
+
+# The SMTP banner should only contain this MTA's hostname and the software
+smtpd_banner = $myhostname ESMTP $mail_name
+
+# appending .domain is the MUA's job.
+append_dot_mydomain = no
+
+# TLS parameters
+
+## The TLS certificate & key are in the same file
+smtpd_tls_cert_file = /etc/postfix/cert.pem
+smtpd_tls_key_file = $smtpd_tls_cert_file
+
+## Use opportunistic TLS
+smtpd_tls_security_level = may
+smtp_tls_security_level = may
+
+## Cache TLS session tickets
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+
+## Use high security ciphers and protocols
+smtpd_tls_mandatory_ciphers = high
+smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+smtp_tls_mandatory_ciphers = high
+smtp_tls_mandatory_protocols = !SSLv2, !SSLv3
+
+## Always use our cipher list when possible
+tls_preempt_cipherlist = yes
+
+## Allow clients to use ephemeral TLS ciphers
+smtpd_tls_dh1024_param_file = /etc/ssl/dh2048.pem
+
+## Never use compression (CRIME attack)
+tls_ssl_options = NO_COMPRESSION
+
+# We should never accept mail for local delivery
+mydestination =
+mailbox_transport = error:this server does not accept mail for local delivery
+
+# Attempt to mitigate Denial of Service attacks
+smtpd_client_connection_count_limit = 10
+smtpd_client_connection_rate_limit = 30
+
+# Limit message size to 20MiB
+message_size_limit = 20970000
+
+# Limit header size to 1MiB
+header_size_limit = 1049000
+
+# Disable quota checks
+mailbox_size_limit = 0
+
+# Appropriate restrictions. Be optimistic about mynetworks (other containers).
+smtpd_helo_restrictions = permit_mynetworks, reject_non_fqdn_helo_hostname, reject_invalid_helo_hostname, permit
+smtpd_relay_restrictions = permit_mynetworks, defer_unauth_destination
+smtpd_sender_restrictions = permit_mynetworks, reject_non_fqdn_sender, reject_unknown_sender_domain, permit
+smtpd_recipient_restrictions = reject_unauth_pipelining, reject_non_fqdn_recipient, reject_unknown_recipient_domain, permit_mynetworks, reject_unauth_destination, permit
+
+# Internal alias database
+alias_maps = hash:/etc/postfix/aliases
+alias_database = $alias_maps
+
+# All of our public aliases
+virtual_alias_maps = hash:/etc/postfix/virtual_aliases
+virtual_alias_domains = hash:/etc/postfix/virtual_domains
+
+# Never relay mail (common cause of backscatter)
+relayhost =
+
+# Mail originating from Postfix should be from $mydomain
+myorigin = $mydomain
+
+# Allow other Docker containers to send mail through us
+mynetworks = [::1]/128 127.0.0.0/8 172.17.0.0/16
+
+# Allow use of + for account extensions
+recipient_delimiter = +
+
+# Delay rejection until the RCPT TO command so that we can see who was attempting to send what
+smtpd_delay_reject = yes

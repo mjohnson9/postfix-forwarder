@@ -33,5 +33,5 @@ COPY main.cf /etc/postfix/main.cf
 COPY start.sh /opt/start.sh
 RUN chmod a+x /opt/start.sh
 
-EXPOSE 25 465
+EXPOSE 25 587
 CMD ["/opt/start.sh"]
